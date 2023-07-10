@@ -1,0 +1,15 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html,body{
+  @apply bg-gray-700;
+}
+
+input,select,textarea{
+  @apply rounded-md;
+}
+
+button{
+  @apply p-2 rounded-md flex items-center justify-center whitespace-nowrap h-12 hover:opacity-80;
+}
