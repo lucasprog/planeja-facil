@@ -1,70 +1,21 @@
 <script setup lang="ts">
-  import Search from './components/Search.vue'
-  import ItemBill from './components/ItemBill.vue'
-  import { ref, computed } from 'vue';
+  import { computed } from 'vue';
 
-  const bills = ref([
-    {
-      name: 'Conta 001',
-      price: 1000.00,
-      due_date: "2023-08-15"
-    },
-    {
-      name: 'Conta 002',
-      price: 2000.00,
-      due_date: "2023-08-15"
-    },
-    {
-      name: 'Conta 003',
-      price: 300.00,
-      due_date: "2023-08-15"
-    },
-    {
-      name: 'Conta 004',
-      price: 40.00,
-      due_date: "2023-08-15"
-    },
-    {
-      name: 'Conta 002',
-      price: 2000.00,
-      due_date: "2023-08-15"
-    },
-    {
-      name: 'Conta 003',
-      price: 300.00,
-      due_date: "2023-08-15"
-    },
-    {
-      name: 'Conta 004',
-      price: 40.00,
-      due_date: "2023-08-15"
-    },
-    {
-      name: 'Conta 001',
-      price: 1000.00,
-      due_date: "2023-08-15"
-    },
-    {
-      name: 'Conta 002',
-      price: 2000.00,
-      due_date: "2023-08-15"
-    },
-    {
-      name: 'Conta 003',
-      price: 300.00,
-      due_date: "2023-08-15"
-    },
-    {
-      name: 'Conta 004',
-      price: 40.00,
-      due_date: "2023-08-15"
-    }
-  ]);
+  //Components
+  import Search from './components/Search.vue';
+  import BillsList from './components/Bills/List.vue'
 
-  const totalBills = computed(() =>{
-    return bills.value.map((itemBill:any) => itemBill.price).reduce((acc:any,curr:any) => acc + curr,0)
-  })
+  import { useBillsStore } from './stores/useBillsStore';
 
+  const billsStore = useBillsStore();
+
+  const totalBills = computed(() => billsStore.totalBills )
+
+  const toggleShowDialog = () =>{
+    billsStore.openDialog();
+    billsStore.setTypeDialog('register');
+  }
+  
 </script>
 
 <template>
@@ -72,13 +23,22 @@
     <h1 class="text-blue">Planeja Fácil</h1>
     
     <div class="c-block-filter">
-      <Search /> <button class="c-block-filter__button-create">Nova Conta</button>
+      <Search /> 
+      <button class="c-block-filter__button-create" 
+        @click="toggleShowDialog()">
+        Nova Conta
+      </button>
     </div>
 
     <div class="list-bills">
-      <ItemBill v-for="bill in bills" :bill="bill" :key="bill"></ItemBill>
+     <BillsList />
     </div>
-    {{ $filters.currencyBRL(totalBills) }}
+
+    <div class="total-bills">
+      <span class="total-bills__label">Valor Total:</span>
+      <strong class="total-bills__amount"> {{ totalBills }} </strong>
+    </div>
+
   </div>
 </template>
 
@@ -88,7 +48,7 @@
 }
 
 .page-base .list-bills{
-  @apply flex flex-col w-full h-full max-h-96 gap-2 overflow-y-scroll overflow-x-hidden;
+  @apply flex flex-col w-full h-full gap-2;
 }
 
 .c-block-filter{
@@ -97,5 +57,13 @@
 
 .c-block-filter__button-create{
   @apply bg-green-600 text-white;
+}
+
+.total-bills{
+  @apply flex gap-2 items-center justify-center text-white;
+}
+
+.total-bills__amount{
+  @apply  bg-red-700 text-white rounded-full pl-4 pt-1 pb-1 pr-4;
 }
 </style>

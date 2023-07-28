@@ -13,3 +13,19 @@ input,select,textarea{
 button{
   @apply p-2 rounded-md flex items-center justify-center whitespace-nowrap h-12 hover:opacity-80;
 }
+
+::-webkit-scrollbar{
+  @apply w-2 h-2;
+}
+
+::-webkit-scrollbar-track{
+  @apply bg-transparent m-0;
+}
+
+::-webkit-scrollbar-thumb{
+  @apply border-gray-700 bg-gray-600 rounded-full border-4;
+}
+
+::-webkit-scrollbar-thumb:hover{
+  @apply bg-gray-500;
+}

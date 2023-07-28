@@ -1,14 +1,21 @@
 <script setup lang="ts">
   import { ref } from 'vue'
 
-  const vsearch = ref(null)
+  import { useBillsStore } from '../stores/useBillsStore';
+
+  const billsStore = useBillsStore();
+
+  const vsearch = ref(null);
+
+  const goSearch = () => {
+    billsStore.setSearch(vsearch.value);
+  }
 </script>
 
 <template>
   <div class="c-search">
     <form class="c-search__form">
-      <input class="c-search__input" type="search" name="search" v-model="vsearch">
-      <button class="c-search__button">Buscar</button>
+      <input placeholder="Procure sua conta" class="c-search__input" type="search" name="search" v-model="vsearch" @keyup="goSearch()">
     </form>
   </div>
 </template>
