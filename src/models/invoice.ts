@@ -1,11 +1,9 @@
-// import {Installment} from "~/model/installment";
-
 export interface InvoiceInterface {
     name : string,
     details? : string,
     totalValue : string,
     due_date : string,
     id: string,
-    created_at: Date,
+    created_at?: Date,
     updated_at: Date|null
 }

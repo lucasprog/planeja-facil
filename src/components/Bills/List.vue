@@ -18,13 +18,15 @@
 
   const deleteModalDialog = ref(false);
 
-  const formValueCleared = {
-      id: '',
-      name : "",
-      details : "",
-      totalValue : "0",
-      due_date : ""
-  }
+  const formValueCleared: InvoiceInterface= {
+    id: "",
+    name: "",
+    details: "",
+    totalValue: "0",
+    due_date: "",
+    created_at: undefined,
+    updated_at: null
+}
 
   const form = ref<InvoiceInterface>(formValueCleared);
 

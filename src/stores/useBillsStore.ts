@@ -29,7 +29,7 @@ export const useBillsStore = defineStore('bills', {
       if( billA[state.sortBy] < billB[state.sortBy] ){
         return 1;
       }
-      if( billA[state.sortBy] > billB[state.sortBy] ){
+      if( billA[state.sortBy] > billB[state.sortBy]   ){
         return -1;
       }
       return 0;
