@@ -1,9 +1,11 @@
 <script setup lang="ts">
   import { PropType, toRefs } from 'vue';
+  import PlListItem from '../Libraries/PlListItem.vue';
+  import PlButton from '../Libraries/PlButton.vue';
+  import PlAmount from '../Libraries/PlAmount.vue';
+  import PlDate from '../Libraries/PlDate.vue'
 
   import { InvoiceInterface } from '../../models/invoice'
-
-  import { dateFormat } from '../../composables/helpers'
 
   const props = defineProps({
     bill: {
@@ -12,7 +14,7 @@
     }
   });
 
-  const emit = defineEmits(['onEdit','onDelete']);
+  const emit = defineEmits(['onEdit','onDelete','onChecked']);
 
   const { bill } = toRefs(props);
 
@@ -20,24 +22,29 @@
 
   const eDelete = () => {emit('onDelete',bill)}
 
+  const eChecked = () => {emit('onChecked',bill)}
+
 </script>
 <template>
-  <div class="c-item-bill">
+  <PlListItem class="c-item-bill">
     <h2 class="c-item-bill__name">
       {{ bill.name }}
       <small class="c-item-bill__due-date">
-        <strong>Vencimento:</strong>{{ dateFormat(bill.due_date) }}
+        <strong>Vencimento:</strong>
+        <pl-date :date="bill.due_date"></pl-date>
       </small>
     </h2>
 
     <div class="c-item-bill__block-end">
-      <span class="c-item-bill__totalValue">{{ parseFloat(bill.totalValue).toLocaleString('pt-br',{style: 'currency', currency: 'BRL', minimumFractionDigits: 2}) }}</span>
+      <span class="c-item-bill__totalValue">
+        <pl-amount :amount="bill.totalValue"></pl-amount></span>
       <div class="c-item-bill__group-buttons">
-        <button @click="eEdit" class="c-item-bill__button c-item-bill__button--edit">Editar</button>
-        <button @click="eDelete" class="c-item-bill__button c-item-bill__button--delete">Excluír</button>
+        <input type="checkbox" name="done[]" v-model="bill.done" @click="eChecked">
+        <pl-button type="edit" @click="eEdit" class="c-item-bill__button">Editar</pl-button>
+        <pl-button type="delete" @click="eDelete" class="c-item-bill__button">Excluír</pl-button>
       </div>
     </div>
-  </div>
+  </PlListItem>
 </template>
 <style scoped>
   .c-item-bill{
@@ -63,15 +70,4 @@
     @apply flex items-center justify-center gap-2;
   }
 
-  .c-item-bill__button{
-    @apply text-white h-8 text-xs rounded-full shadow-none text-xs pl-4 pr-4 pt-1 pb-1;
-  }
-
-  .c-item-bill__button--delete{
-    @apply bg-red-600;
-  }
-
-  .c-item-bill__button--edit{
-    @apply bg-blue-600;
-  }
 </style>

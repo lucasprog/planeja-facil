@@ -8,11 +8,7 @@ import { genID } from '../composables/helpers';
 
 //Mocks
 import { mockBills } from '../mocks/bills';
-
-interface PropsDialog {
-  type: string,
-  show: boolean
-}
+import { DialogInterface } from '../models/dialog';
 
 export const useBillsStore = defineStore('bills', {
   state: () => ({
@@ -22,10 +18,10 @@ export const useBillsStore = defineStore('bills', {
     dialog: {
       type: 'register',
       show: false
-    } as  PropsDialog
+    } as  DialogInterface
   }),
   getters:{
-    getBills: (state): Array<InvoiceInterface> => state.bills.sort((billA,billB) => {
+    getBills: (state): Array<InvoiceInterface> => state.bills.sort((billA: InvoiceInterface,billB: InvoiceInterface) => {
       if( billA[state.sortBy] < billB[state.sortBy] ){
         return 1;
       }
@@ -34,17 +30,21 @@ export const useBillsStore = defineStore('bills', {
       }
       return 0;
     }),
-    getDialog: (state): PropsDialog => state.dialog,
-    billsFiltered(){
+    getDialog: (state: any): DialogInterface => state.dialog,
+    billsFiltered(): Array<InvoiceInterface>{
       return this.getBills.filter((itemBill: InvoiceInterface) => itemBill.name.indexOf(this.search) !== -1 ||  
                                                 itemBill.due_date.indexOf(this.search) !== -1 ||
                                                 itemBill.totalValue.indexOf(this.search) !== -1 
                                   )
     },
-    totalBills(){
+    totalBills(): string{
       return this.getBills.map((itemBill:any) => parseFloat(itemBill.totalValue))
                         .reduce((acc:any,curr:any) => acc + curr,0)
-                        .toLocaleString('pt-br',{style: 'currency', currency: 'BRL', minimumFractionDigits: 2})
+    },
+    totalBillsAll(): string{
+      return this.getBills.filter((item: any) => !item.done)
+                        .map((itemBill:any) => parseFloat(itemBill.totalValue))
+                        .reduce((acc:any,curr:any) => acc + curr,0)
     }
   },  
   actions:{

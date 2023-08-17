@@ -3,6 +3,11 @@ export const genID = () => {
 }
 
 export const dateFormat = (dateString: any, dateStyle:any = 'short') => {
-    const date = new Date(dateString);
-    return new Intl.DateTimeFormat('pt-BR', {dateStyle}).format(date);
+    try{
+        const date = new Date(dateString);
+        return new Intl.DateTimeFormat('pt-BR', {dateStyle}).format(date);
+    }catch(error){
+        console.log('FORMATO DE DATA INVÁLIDO');
+        return null;
+    }
 }

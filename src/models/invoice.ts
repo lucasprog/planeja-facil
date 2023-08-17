@@ -5,5 +5,6 @@ export interface InvoiceInterface {
     due_date : string,
     id: string,
     created_at?: Date,
-    updated_at: Date|null
+    updated_at: Date|null,
+    done?: boolean
 }

@@ -18,7 +18,8 @@
 
   const deleteModalDialog = ref(false);
 
-  const formValueCleared: InvoiceInterface= {
+
+  const form = ref<InvoiceInterface>({
     id: "",
     name: "",
     details: "",
@@ -26,9 +27,7 @@
     due_date: "",
     created_at: undefined,
     updated_at: null
-}
-
-  const form = ref<InvoiceInterface>(formValueCleared);
+  });
 
   const onEdit = (bill: InvoiceInterface) => {
     form.value = {...bill};
@@ -41,7 +40,15 @@
     billToDelete.value = bill;
   }
 
-  const clearForm = () => form.value = formValueCleared
+  const clearForm = () => form.value = {
+    id: "",
+    name: "",
+    details: "",
+    totalValue: "0",
+    due_date: "",
+    created_at: undefined,
+    updated_at: null
+  }
 
   const deleteBill = () => {
     if ( billToDelete.value ){
@@ -49,7 +56,7 @@
     }
     deleteModalDialog.value = false;
   }
-
+  
   const onSave = () =>{
     if( billsStore.getDialog.type === 'register' ){
       billsStore.insertBill(form.value)
@@ -59,6 +66,10 @@
     }
 
     billsStore.closeDialog();
+  }
+  
+  const onChecked = (bill: InvoiceInterface) => {
+    billsStore.updateBill(bill)
   }
 
   const onOpenModal = () => {
@@ -77,7 +88,8 @@
           :bill="bill" 
           :key="key"
           @onEdit="onEdit(bill)"
-          @onDelete="onDelete(bill)"></ItemBill>
+          @onDelete="onDelete(bill)"
+          @onChecked="onChecked"></ItemBill>
 
     </div>
 
