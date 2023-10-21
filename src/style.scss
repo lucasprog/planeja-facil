@@ -2,8 +2,17 @@
 @tailwind components;
 @tailwind utilities;
 
+:root{
+  --plf-grey: #DEDFDE;
+  --plf-blue-light: #3979F4;
+  --plf-blue-dark: #2051B0;
+  --plf-green-dark: #1C521E;
+  --plf-green-light: #2DE929;
+  --plf-red-light: #F43939;
+}
+
 html,body{
-  @apply bg-gray-700;
+  @apply bg-[var(--plf-grey)];
 }
 
 input,select,textarea{

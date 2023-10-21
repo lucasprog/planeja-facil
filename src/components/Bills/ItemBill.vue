@@ -1,5 +1,6 @@
 <script setup lang="ts">
   import { PropType, toRefs } from 'vue';
+
   import PlListItem from '../Libraries/PlListItem.vue';
   import PlButton from '../Libraries/PlButton.vue';
   import PlAmount from '../Libraries/PlAmount.vue';
@@ -27,19 +28,22 @@
 </script>
 <template>
   <PlListItem class="c-item-bill">
-    <h2 class="c-item-bill__name">
-      {{ bill.name }}
-      <small class="c-item-bill__due-date">
-        <strong>Vencimento:</strong>
-        <pl-date :date="bill.due_date"></pl-date>
-      </small>
-    </h2>
+    <div class="c-item-bill__block-start">
+      <input type="checkbox" name="done[]" v-model="bill.done" @click="eChecked" />
+      <h2 class="c-item-bill__name">
+        {{ bill.name }}
+        <small class="c-item-bill__due-date">
+          <pl-date :date="bill.due_date"></pl-date>
+        </small>
+      </h2>
+    </div>
 
     <div class="c-item-bill__block-end">
       <span class="c-item-bill__totalValue">
-        <pl-amount :amount="bill.totalValue"></pl-amount></span>
+        <pl-amount :amount="bill.totalValue"></pl-amount>
+      </span>
       <div class="c-item-bill__group-buttons">
-        <input type="checkbox" name="done[]" v-model="bill.done" @click="eChecked">
+        <pl-button type="success" class="c-item-bill_button">Ver</pl-button>
         <pl-button type="edit" @click="eEdit" class="c-item-bill__button">Editar</pl-button>
         <pl-button type="delete" @click="eDelete" class="c-item-bill__button">Excluír</pl-button>
       </div>
@@ -48,20 +52,22 @@
 </template>
 <style scoped>
   .c-item-bill{
-    @apply flex justify-between items-center gap-4 w-full min-h-[3rem] bg-gray-600 rounded-lg pl-4 pt-4 pb-4 pr-2 hover:bg-gray-500 shadow-sm;
+    @apply flex justify-between items-center gap-4 w-full min-h-[3rem] bg-white rounded-lg p-8 hover:bg-gray-100 shadow-sm;
   }
 
   .c-item-bill__totalValue{
-    @apply font-semibold text-sm text-white bg-green-600 pl-4 pr-4 pt-1 pb-1 rounded-full;
+    @apply font-semibold text-red-500 text-xl;
   }
+
   .c-item-bill__name{
-    @apply flex flex-col text-gray-300;
+    @apply flex flex-col text-[#1e1e1e] font-bold text-lg;
   }
 
   .c-item-bill__due-date{
-    @apply text-xs text-gray-900;
+    @apply text-xs text-gray-900 font-normal;
   }
 
+  .c-item-bill__block-start,
   .c-item-bill__block-end{
     @apply flex items-center justify-center gap-4;
   }

@@ -4,11 +4,9 @@
     import { useIncomeStore } from '../stores/useIncomesStore';
 
     //Components
-    import Search from '../components/Search.vue';
+
+    import FilterForm from '../components/Filter/Form.vue';
     import BillsList from '../components/Bills/List.vue'
-    import PlButton from '../components/Libraries/PlButton.vue'
-    import PlAmount from '../components/Libraries/PlAmount.vue'
-    import PlFooter from '../components/PlFooter.vue'
 
     const billsStore = useBillsStore();
     const insomesStore = useIncomeStore();
@@ -28,18 +26,16 @@
     <div class="p-home">
 
         <div class="c-block-filter">
-          <Search /> 
-          <pl-button class="c-block-filter__button-create" 
-            @click="toggleBillShowDialog()">
-            Nova Conta
-          </pl-button>
+
+            <FilterForm />
+           
         </div>
     
         <div class="list-bills">
-         <BillsList />
+            <BillsList />
         </div>
     
-        <pl-footer type="fixed">
+        <!-- <pl-footer type="fixed">
             <div class="c-total">
     
                 <div class="c-total__insome">
@@ -63,7 +59,7 @@
                 </div>
     
             </div>
-        </pl-footer>
+        </pl-footer> -->
 
     </div>
 

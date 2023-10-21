@@ -1,8 +1,7 @@
 <script setup lang="ts">
-import { toRefs } from 'vue';
+import { PropType, toRefs } from 'vue';
 
-
-    const props = defineProps({
+const props = defineProps({
         type: {
             type: String as PropType<string>,
             default: 'default'
@@ -10,34 +9,63 @@ import { toRefs } from 'vue';
         nativeType:{
             type: String as PropType<string>,
             default: 'button'
+        },
+        content:{
+            type: String as PropType<string>
+        },
+        route:{
+            type: String as PropType<string>,
+            default: null
         }
     })
     const emits = defineEmits(['click']);
 
-    const clicked = (e: Event) => {
-        emits('click',e)
-    }
+    const clicked = (e: Event) => emits('click',e);
 
-    const { type, nativeType } = toRefs(props);
+    const { type, nativeType, content, route } = toRefs(props);
 
 </script>
 <template>
-    <button :type="nativeType" class="c-button" @click="clicked" :class="`c-button--${type}`">
-        <slot name="default"></slot>
-    </button>    
-</template>
-<style scoped>
+    <template v-if="!route">
+        <button 
+            v-bind="$attrs"
+            :type="nativeType" 
+            class="c-button" 
+            @click="clicked" 
+            :class="`c-button--${type}`">
+            <slot v-if="!content" name="default"></slot>
+            {{ content?content:''}}
+        </button>    
+    </template>
 
+    <template v-if="route">
+        <router-link 
+            v-bind="$attrs"
+            class="c-button c-button--link" 
+            :class="`c-button--${type}`"
+            :to="route">
+            <slot v-if="!content" name="default"></slot>
+            {{ content?content:''}}
+        </router-link>
+    </template>
+
+</template>
+<style scoped lang="scss">
 
 .c-button{
-    @apply text-white h-8 text-xs rounded-full shadow-none text-xs pl-4 pr-4 pt-1 pb-1;
-  }
+    @apply w-full text-white h-8 text-xs rounded-lg shadow-none flex items-center justify-center p-1;
 
-  .c-button--delete{
-    @apply bg-red-600;
-  }
+    &--delete{
+        @apply bg-red-600;
+    }
 
-  .c-button--edit{
-    @apply bg-blue-600;
-  }
+    &--edit{
+        @apply bg-blue-600;
+    }
+
+    &--success{
+        @apply bg-[var(--plf-green-light)]
+    }
+}
+
 </style>
