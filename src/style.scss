@@ -38,3 +38,11 @@ button{
 ::-webkit-scrollbar-thumb:hover{
   @apply bg-gray-500;
 }
+
+.icon-caret-right{
+  @apply bg-icon-caret-right bg-no-repeat bg-center;
+}
+
+.icon-caret-left{
+  @apply bg-icon-caret-right bg-no-repeat bg-center rotate-180;
+}

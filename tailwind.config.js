@@ -4,7 +4,17 @@ export default {
     "./index.html",
     "./src/**/*.{js,ts,jsx,tsx,vue}",
   ],
-  theme: {},
+  theme: {
+    extend:{
+      backgroundImage: {
+        'icon-caret-right': "url('/img/icon-caret-right.svg')"
+      },
+      colors:{
+          'plf-blue-dark':'#2051B0',
+          'plf-blue-light':'#3979F4'
+      }
+    }
+  },
   plugins: [],
 }
 

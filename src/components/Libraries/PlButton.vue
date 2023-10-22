@@ -1,28 +1,29 @@
 <script setup lang="ts">
-import { PropType, toRefs } from 'vue';
+import { PropType, toRefs, ref} from 'vue';
 
 const props = defineProps({
-        type: {
-            type: String as PropType<string>,
-            default: 'default'
-        },
-        nativeType:{
-            type: String as PropType<string>,
-            default: 'button'
-        },
-        content:{
-            type: String as PropType<string>
-        },
-        route:{
-            type: String as PropType<string>,
-            default: null
-        }
-    })
-    const emits = defineEmits(['click']);
+    type: {
+        type: String as PropType<string>,
+        default: 'default'
+    },
+    nativeType:{
+        type: String as PropType<string>,
+        default: 'button'
+    },
+    content:{
+        type: String as PropType<string>
+    },
+    route:{
+        type: String as PropType<string>,
+        default: null
+    }
+})
 
-    const clicked = (e: Event) => emits('click',e);
+const emits = defineEmits(['click']);
 
-    const { type, nativeType, content, route } = toRefs(props);
+const clicked = (e: Event) => emits('click',e);
+
+const { type, nativeType, content, route } = toRefs(props);
 
 </script>
 <template>
